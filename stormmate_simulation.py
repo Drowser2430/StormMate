@@ -3,6 +3,7 @@
 class SimulatedUPS:
     def __init__(self):
         self.status = "on_grid"
+        self.battery_level = 100
 
     def get_status(self):
         return self.status
@@ -10,46 +11,60 @@ class SimulatedUPS:
     def simulate_outage(self):
         self.status = "on_battery"
 
+    def get_battery_level(self):
+        return self.battery_level
+
+
 class SimulatedSmartPlug:
-    def __init__(self):
+    def __init__(self, name):
+        self.name = name
         self.powered = True
 
-    def turn_off(self):
-        self.powered = False
-        print("🔌 Smart Plug turned OFF")
+    def detect_power(self, ups_status):
+        self.powered = (ups_status == "on_grid")
 
-    def turn_on(self):
-        self.powered = True
-        print("🔌 Smart Plug turned ON")
+    def get_status(self):
+        return f"{self.name} is {'ON' if self.powered else 'OFF'}"
+
 
 class SimulatedLight:
+    def __init__(self, location):
+        self.location = location
+        self.brightness = 0
+
     def turn_on(self):
-        print("💡 Light ON")
+        self.brightness = 100
+        print(f"🟡 {self.location} light turned ON at brightness {self.brightness}%.")
 
     def turn_off(self):
-        print("💡 Light OFF")
+        self.brightness = 0
+        print(f"⚫ {self.location} light turned OFF.")
 
-def alexa_prompt():
-    print("Alexa: Power outage detected. Activate StormMate?")
-    user_response = input("User response (yes/no): ").strip().lower()
-    return user_response == "yes"
 
-def run_simulation():
+def simulate_stormmate():
     ups = SimulatedUPS()
-    plug = SimulatedSmartPlug()
-    light = SimulatedLight()
+    router_plug = SimulatedSmartPlug("Router")
+    light = SimulatedLight("Living Room")
 
-    print("⚠️ Simulating power outage...")
+    print("🌤️ System running normally...")
+    print(router_plug.get_status())
+
+    # Simulate outage
     ups.simulate_outage()
+    router_plug.detect_power(ups.get_status())
 
-    if ups.get_status() == "on_battery":
-        if alexa_prompt():
-            plug.turn_on()
-            light.turn_on()
-            print("📨 SMS Alert: Power outage detected. StormMate activated.")
-        else:
-            print("Alexa: Okay, StormMate not activated.")
+    print("\n⚠️ Power outage detected!")
+    print(router_plug.get_status())
+    print("🔊 Alexa: Power outage detected. Activate StormMate?")
+    print("🗣️ User: Yes.")
+    print("🔊 Alexa: Activating StormMate...")
 
-# Run the simulation
+    # Trigger lights
+    light.turn_on()
+
+    # Simulate SMS alert (print only)
+    print("📩 Sending SMS alert: 'Power outage at home. StormMate activated.'")
+
+
 if __name__ == "__main__":
-    run_simulation()
+    simulate_stormmate()
