@@ -1,14 +1,14 @@
-# PowerPal: Smart Emergency Lighting System
+# StromMate: Smart Emergency Lighting System
 
 > Keep your lights and Wi-Fi on during climate-related blackouts. Powered by smart plugs, UPS battery backup, and optional SMS alerts.
 
 ---
 
-## 🔥 Why It Matters
+## StormMate 🔥 Why It Matters
 
 Millions of households in the U.S. are experiencing increasingly frequent blackouts due to wildfires, storms, grid failures, and heatwaves. Most people don’t have backup generators — and even fewer have a clear plan.
 
-**PowerPal** is a plug-and-play system designed for resilience:
+**StormMate** is a plug-and-play system designed for resilience:
 
 - Keeps your Wi-Fi and lights running for hours after power loss
 - Sends SMS alerts to loved ones during outages (optional)
