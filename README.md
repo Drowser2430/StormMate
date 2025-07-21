@@ -19,12 +19,13 @@ Millions of households in the U.S. are experiencing increasingly frequent blacko
 
 ## ⚙️ What’s Included
 
-- ✅ System logic diagram (PDF/PNG)
-- ✅ Smart routines (for Alexa, Google Home, or IFTTT)
-- ✅ Twilio webhook code for SMS alerts
-- ✅ UPS + lightbulb hardware recommendations
-- ✅ “Storm Mode” routine example script
-- ✅ Step-by-step setup guide (Notion or PDF link)
+- A full automation flow for smart emergency lighting
+- Sample smart routines for Alexa and Google Home
+- UPS (uninterruptible power supply) and LED light recommendations
+- Twilio webhook setup for SMS outage alerts
+- An emergency “storm mode” script for auto-switching devices
+- Editable system diagram with labeled components
+- Licensing and usage terms under CC BY-NC-ND 4.0
 
 ---
 
@@ -41,14 +42,9 @@ Millions of households in the U.S. are experiencing increasingly frequent blacko
 
 ## 🔐 License
 
-This project is provided under the [MIT License](./LICENSE), with one restriction:
-
-> **Commercial use is not permitted without explicit permission.**
-
-To license this system for use in a product, service, or organization, email:
-
-📩 **stormmate-licensing@protonmail.com**
-
+This project is licensed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0).
+You may share this work with attribution, but you may not use it commercially, modify it, or distribute derivatives.
+For licensing inquiries or commercial interest, contact: dariusrowserbiz@gmail.com
 ---
 
 ## 🌍 Want to Contribute?
