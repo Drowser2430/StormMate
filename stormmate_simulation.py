@@ -1,4 +1,4 @@
-# stormmate_simulation.py
+# === Simulated Hardware Classes ===
 
 class SimulatedUPS:
     def __init__(self):
@@ -8,63 +8,98 @@ class SimulatedUPS:
     def get_status(self):
         return self.status
 
-    def simulate_outage(self):
-        self.status = "on_battery"
-
     def get_battery_level(self):
         return self.battery_level
 
+    def simulate_outage(self):
+        self.status = "on_battery"
+        self.battery_level -= 10
+
+    def restore_power(self):
+        self.status = "on_grid"
+        self.battery_level = 100
+
 
 class SimulatedSmartPlug:
-    def __init__(self, name):
-        self.name = name
-        self.powered = True
+    def __init__(self):
+        self.power_status = "on"
 
     def detect_power(self, ups_status):
-        self.powered = (ups_status == "on_grid")
-
-    def get_status(self):
-        return f"{self.name} is {'ON' if self.powered else 'OFF'}"
+        return "off" if ups_status == "on_battery" else "on"
 
 
 class SimulatedLight:
-    def __init__(self, location):
-        self.location = location
+    def __init__(self, name):
+        self.name = name
+        self.status = "off"
         self.brightness = 0
 
-    def turn_on(self):
-        self.brightness = 100
-        print(f"🟡 {self.location} light turned ON at brightness {self.brightness}%.")
+    def turn_on(self, brightness=100):
+        self.status = "on"
+        self.brightness = brightness
+        print(f"{self.name} turned on at {brightness}% brightness")
 
     def turn_off(self):
+        self.status = "off"
         self.brightness = 0
-        print(f"⚫ {self.location} light turned OFF.")
+        print(f"{self.name} turned off")
 
 
-def simulate_stormmate():
-    ups = SimulatedUPS()
-    router_plug = SimulatedSmartPlug("Router")
-    light = SimulatedLight("Living Room")
+# === Core Simulation Logic ===
 
-    print("🌤️ System running normally...")
-    print(router_plug.get_status())
+def simulate_alexa_prompt():
+    print("Alexa: Darius, power outage detected. Activate StormMate?")
+    response = input("User: ").lower()
+    return response in ["yes", "y"]
 
-    # Simulate outage
-    ups.simulate_outage()
-    router_plug.detect_power(ups.get_status())
 
-    print("\n⚠️ Power outage detected!")
-    print(router_plug.get_status())
-    print("🔊 Alexa: Power outage detected. Activate StormMate?")
-    print("🗣️ User: Yes.")
-    print("🔊 Alexa: Activating StormMate...")
+def automation_flow(lights):
+    print("Alexa: Okay, activating StormMate. Lighting your living room.")
+    for light in lights:
+        light.turn_on(70)
+    print("Sending SMS alert to emergency contacts... (simulated)")
 
-    # Trigger lights
-    light.turn_on()
 
-    # Simulate SMS alert (print only)
-    print("📩 Sending SMS alert: 'Power outage at home. StormMate activated.'")
+# === AI Logic Section ===
 
+def get_user_preference(current_hour):
+    if 6 <= current_hour < 9:
+        return ["kitchen"]
+    elif 18 <= current_hour < 22:
+        return ["living_room", "hallway"]
+    else:
+        return ["bedroom"]
+
+def detect_anomaly(ups_status_history):
+    if len(ups_status_history) < 3:
+        return False
+    return ups_status_history[-1] != ups_status_history[-2] and ups_status_history[-2] != ups_status_history[-3]
+
+
+# === Main Simulation Execution ===
 
 if __name__ == "__main__":
-    simulate_stormmate()
+    ups = SimulatedUPS()
+    smart_plug = SimulatedSmartPlug()
+    lights = {
+        "kitchen": SimulatedLight("Kitchen Light"),
+        "living_room": SimulatedLight("Living Room Light"),
+        "hallway": SimulatedLight("Hallway Light"),
+        "bedroom": SimulatedLight("Bedroom Light"),
+    }
+
+    ups_status_history = []
+
+    print("Simulating power outage...")
+    ups.simulate_outage()
+    ups_status = ups.get_status()
+    ups_status_history.append(ups_status)
+
+    if ups_status == "on_battery":
+        if simulate_alexa_prompt():
+            import datetime
+            current_hour = datetime.datetime.now().hour
+            preferred_rooms = get_user_preference(current_hour)
+            automation_flow([lights[room] for room in preferred_rooms])
+            if detect_anomaly(ups_status_history):
+                print("⚠️ Anomaly detected in UPS status pattern.")
