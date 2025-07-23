@@ -75,8 +75,7 @@ def detect_anomaly(ups_status_history):
         return False
     return ups_status_history[-1] != ups_status_history[-2] and ups_status_history[-2] != ups_status_history[-3]
 
-
-# === Main Simulation Execution ===
+    # === Main Simulation Execution ===
 
 if __name__ == "__main__":
     ups = SimulatedUPS()
@@ -103,3 +102,49 @@ if __name__ == "__main__":
             automation_flow([lights[room] for room in preferred_rooms])
             if detect_anomaly(ups_status_history):
                 print("⚠️ Anomaly detected in UPS status pattern.")
+
+# Simulated UPS
+class SimulatedUPS:
+    def __init__(self):
+        self.status = "on_grid"
+        self.battery_level = 100
+
+    def get_status(self):
+        return self.status
+
+    def simulate_outage(self):
+        self.status = "on_battery"
+
+    def get_battery_level(self):
+        return self.battery_level
+
+
+# Simulated Smart Plug
+class SimulatedSmartPlug:
+    def __init__(self):
+        self.power_on = True
+
+    def detect_power(self):
+        return self.power_on
+
+    def simulate_power_loss(self):
+        self.power_on = False
+
+
+# Simulated Light
+class SimulatedLight:
+    def __init__(self, name):
+        self.name = name
+        self.state = "off"
+        self.brightness = 0
+
+    def turn_on(self, brightness=100):
+        self.state = "on"
+        self.brightness = brightness
+        print(f"{self.name} light ON at {brightness}% brightness.")
+
+    def turn_off(self):
+        self.state = "off"
+        self.brightness = 0
+        print(f"{self.name} light OFF.")
+
