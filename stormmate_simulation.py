@@ -45,22 +45,7 @@ class SimulatedLight:
         print(f"{self.name} turned off")
 
 
-# === Core Simulation Logic ===
-
-def simulate_alexa_prompt():
-    print("Alexa: Darius, power outage detected. Activate StormMate?")
-    response = input("User: ").lower()
-    return response in ["yes", "y"]
-
-
-def automation_flow(lights):
-    print("Alexa: Okay, activating StormMate. Lighting your living room.")
-    for light in lights:
-        light.turn_on(70)
-    print("Sending SMS alert to emergency contacts... (simulated)")
-
-
-# === AI Logic Section ===
+# === AI Logic ===
 
 def get_user_preference(current_hour):
     if 6 <= current_hour < 9:
@@ -73,11 +58,29 @@ def get_user_preference(current_hour):
 def detect_anomaly(ups_status_history):
     if len(ups_status_history) < 3:
         return False
-    return ups_status_history[-1] != ups_status_history[-2] and ups_status_history[-2] != ups_status_history[-3]
+    return (
+        ups_status_history[-1] != ups_status_history[-2]
+        and ups_status_history[-2] != ups_status_history[-3]
+    )
 
-    # === Main Simulation Execution ===
 
-if __name__ == "__main__":
+# === Alexa & Automation Logic ===
+
+def simulate_alexa_prompt():
+    print("Alexa: Darius, power outage detected. Activate StormMate?")
+    response = input("User: ").lower()
+    return response in ["yes", "y"]
+
+def automation_flow(lights):
+    print("Alexa: Okay, activating StormMate. Lighting your living room.")
+    for light in lights:
+        light.turn_on(70)
+    print("SMS Alert: Emergency contacts notified (simulated).")
+
+
+# === Main Simulation Runner ===
+
+def run_simulation():
     ups = SimulatedUPS()
     smart_plug = SimulatedSmartPlug()
     lights = {
@@ -89,7 +92,7 @@ if __name__ == "__main__":
 
     ups_status_history = []
 
-    print("Simulating power outage...")
+    print("\n--- StormMate Simulation Started ---")
     ups.simulate_outage()
     ups_status = ups.get_status()
     ups_status_history.append(ups_status)
@@ -102,74 +105,6 @@ if __name__ == "__main__":
             automation_flow([lights[room] for room in preferred_rooms])
             if detect_anomaly(ups_status_history):
                 print("⚠️ Anomaly detected in UPS status pattern.")
-
-# Simulated UPS
-class SimulatedUPS:
-    def __init__(self):
-        self.status = "on_grid"
-        self.battery_level = 100
-
-    def get_status(self):
-        return self.status
-
-    def simulate_outage(self):
-        self.status = "on_battery"
-
-    def get_battery_level(self):
-        return self.battery_level
-
-
-# Simulated Smart Plug
-class SimulatedSmartPlug:
-    def __init__(self):
-        self.power_on = True
-
-    def detect_power(self):
-        return self.power_on
-
-    def simulate_power_loss(self):
-        self.power_on = False
-
-
-# Simulated Light
-class SimulatedLight:
-    def __init__(self, name):
-        self.name = name
-        self.state = "off"
-        self.brightness = 0
-
-    def turn_on(self, brightness=100):
-        self.state = "on"
-        self.brightness = brightness
-        print(f"{self.name} light ON at {brightness}% brightness.")
-
-    def turn_off(self):
-        self.state = "off"
-        self.brightness = 0
-        print(f"{self.name} light OFF.")
-
-def run_simulation():
-    ups = SimulatedUPS()
-    plug = SimulatedSmartPlug()
-    light1 = SimulatedLight("Living Room Light")
-    light2 = SimulatedLight("Hallway Light")
-
-    print("\n--- StormMate Simulation Started ---")
-
-    # Step 1: UPS switches to battery (simulate power outage)
-    ups.status = "on_battery"
-    plug.power_status = "off"
-
-    # Step 2: Simulate Alexa announcement
-    if ups.get_status() == "on_battery":
-        print("Alexa: Darius, a power outage has been detected. Would you like to activate StormMate?")
-        user_input = input("Type 'yes' to continue simulation: ").strip().lower()
-
-        if user_input == "yes":
-            print("Alexa: Activating StormMate. Lights are turning on now.")
-            light1.turn_on()
-            light2.turn_on()
-            print("SMS Alert: Power outage detected. Emergency lights activated.")
         else:
             print("Alexa: StormMate not activated. Stay safe.")
     else:
@@ -177,8 +112,7 @@ def run_simulation():
 
     print("--- Simulation Complete ---\n")
 
-# Run the simulation
+
+# === Run It ===
 if __name__ == "__main__":
     run_simulation()
-
-
