@@ -148,3 +148,37 @@ class SimulatedLight:
         self.brightness = 0
         print(f"{self.name} light OFF.")
 
+def run_simulation():
+    ups = SimulatedUPS()
+    plug = SimulatedSmartPlug()
+    light1 = SimulatedLight("Living Room Light")
+    light2 = SimulatedLight("Hallway Light")
+
+    print("\n--- StormMate Simulation Started ---")
+
+    # Step 1: UPS switches to battery (simulate power outage)
+    ups.status = "on_battery"
+    plug.power_status = "off"
+
+    # Step 2: Simulate Alexa announcement
+    if ups.get_status() == "on_battery":
+        print("Alexa: Darius, a power outage has been detected. Would you like to activate StormMate?")
+        user_input = input("Type 'yes' to continue simulation: ").strip().lower()
+
+        if user_input == "yes":
+            print("Alexa: Activating StormMate. Lights are turning on now.")
+            light1.turn_on()
+            light2.turn_on()
+            print("SMS Alert: Power outage detected. Emergency lights activated.")
+        else:
+            print("Alexa: StormMate not activated. Stay safe.")
+    else:
+        print("System stable. No outage detected.")
+
+    print("--- Simulation Complete ---\n")
+
+# Run the simulation
+if __name__ == "__main__":
+    run_simulation()
+
+
