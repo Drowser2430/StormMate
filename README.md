@@ -57,9 +57,12 @@ For **commercial licensing**, **enterprise support**, or **integration inquiries
 
 ---
 
-### 🚀 Coming Soon
+### 🚀 Images
 
-Additional features and real-time monitoring integrations are under development.  
-Stay tuned or contribute to the project!
+![System Architecture](system-diagram.png)
+![Automation Flow](automation-flow.png)
+
+
+
 
 
