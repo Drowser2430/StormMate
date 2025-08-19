@@ -3,6 +3,16 @@
 **Keep lights and Wi-Fi on when the grid goes down. Powered by smart automation and peace of mind.**
 
 ---
+Updates
+
+*** StormMate Emergency Lighting Simulation ***
+Simulate a power outage? (y/n): y  
+[StormMate] Switching to backup power (UPS)...
+[StormMate] Sending SMS alert: Power outage detected. Switched to backup.
+Press Enter to simulate power restoration...
+[StormMate] Power restored! Resetting devices to main power.
+*** Simulation Complete ***
+
 
 ### ⚡ Why It Matters
 
