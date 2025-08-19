@@ -13,6 +13,13 @@ Press Enter to simulate power restoration...
 [StormMate] Power restored! Resetting devices to main power.
 *** Simulation Complete ***
 
+## Supporting Documentation
+
+- [Development Roadmap](dev-roadmap.md)
+- [System Architecture Diagram](system-diagram.png)
+- [Automation Flow Diagram](automation-flow.png)
+- [Hardware and LED/UPS Recommendations](hardware-recommendations.md)
+
 
 ### ⚡ Why It Matters
 
