@@ -5,6 +5,12 @@
 ---
 Updates
 
+## 🖥️ Live Simulation Demo
+
+- [power_simulation.ipynb](power_simulation.ipynb)
+  - Run this notebook to simulate outages, UPS backup, SMS, and Alexa routines—no hardware needed!
+
+
 *** StormMate Emergency Lighting Simulation ***
 Simulate a power outage? (y/n): y  
 [StormMate] Switching to backup power (UPS)...
