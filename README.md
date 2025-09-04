@@ -9,6 +9,8 @@ Updates
 
 - [power_simulation.ipynb](power_simulation.ipynb)
   - Run this notebook to simulate outages, UPS backup, SMS, and Alexa routines—no hardware needed!
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/Drowser2430/StormMate/blob/main/power_simulation.ipynb)
+****
 
 
 *** StormMate Emergency Lighting Simulation ***
